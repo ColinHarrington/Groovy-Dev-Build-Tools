@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ] ; then
+    update-alternatives \
+        --install /usr/bin/grails grails /usr/share/grails-1.3.7/bin/grails 100 \
+        --slave /usr/bin/startGrails startGrails /usr/share/grails-1.3.7/bin/startGrails \
+        --slave /usr/bin/grails-debug grails-debug /usr/share/grails-1.3.7/bin/grails-debug
+fi
+
+#DEBHELPER#

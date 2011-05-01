@@ -1,0 +1,30 @@
+grails (1.3.7-1ubuntu7) lucid; urgency=low
+
+  * Set GROOVY_HOME and GROOVY_VERSION for bash completion script to work.
+  * Clean up rules script.
+  * Purge changelog of upstream JIRA issues.
+  * Bumped debhelper build dependency to 7.0.50~.
+  * Change section in control file from devel to java.
+  * Move grails from /usr/lib/grails to /usr/share.
+  * Added gawk as build dependency for bash completion script.
+  * Split package into grails and grails-doc.
+  * Lintian tweaks to control file and posinst/prerm scripts.
+  * Make grails Suggests: grails-doc
+  * Move src/ folder to grails-doc package.
+  * Rename patches diff to mnemonic description.
+
+ -- Marco Vermeulen <vermeulen.mp@gmail.com>  Thu, 28 Apr 2011 20:23:11 +0100
+
+grails (1.3.7-1ubuntu2) lucid; urgency=low
+
+  * Set JAVA_HOME in startGrails based on update-alternatives result.
+  * Added man page for grails cli script.
+  * Added bash auto-completion.
+
+ -- Marco Vermeulen <vermeulen.mp@gmail.com>  Mon, 04 Apr 2011 00:27:23 +0100
+
+grails (1.3.7-1ubuntu1) lucid; urgency=low
+
+  * Prepare initial build.
+
+ -- Marco Vermeulen <vermeulen.mp@gmail.com>  Wed, 09 Mar 2011 12:59:22 +0000

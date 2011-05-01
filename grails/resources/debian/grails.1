@@ -1,0 +1,225 @@
+.TH GRAILS "1" "April 2011"
+.SH NAME
+Grails \- A rapid web development platform built on Groovy
+.SH SYNOPSIS
+.B grails [ENVIRONMENT] COMMAND <args>
+.SH DESCRIPTION
+Grails is a full stack framework and attempts to solve as many pieces of the web development puzzle through the core technology and its associated plug-ins. Included out the box are things like:
+.P
+\- An easy to use Object Relational Mapping layer built on Hibernate.
+.P
+\- An expressive view technology called Groovy Server Pages (GSP).
+.P
+\- A controller layer built on Spring MVC.
+.P
+\- A command line scripting environment built on the Gant.
+.P
+\- An embedded Tomcat container,  configured for on-the-fly reloading.
+.P
+\- Dependency injection with the inbuilt Spring container.
+.P
+\- Support for internationalization built on Spring's MessageSource.
+.P
+\- Transactional service layer using Spring's transaction abstraction.
+.P
+\- All of these are made easy to use through the power of the Groovy language and the extensive use of Domain Specific Languages (DSLs).
+.SH COMMANDS
+.TP
+.B add-proxy
+.IP
+Adds a proxy configuration.
+.TP
+.B bootstrap
+.IP
+Loads and configures a Grails instance.
+.TP
+.B bug-report
+.IP
+Creates a ZIP containing source artifacts for reporting bugs.
+.TP
+.B clean
+.IP
+Cleans a Grails project.
+.TP
+.B clear-proxy
+.IP
+Clears a proxy configuration.
+.TP
+.B compile
+.IP
+Compiles a Grails project.
+.TP
+.B console
+.IP
+Load the Grails interactive Swing console.
+.TP
+.B create-app
+.IP
+Creates a Grails application for the given name.
+.TP
+.B create-controller
+.IP
+Creates a new controller.
+.TP
+.B create-domain-class
+.IP
+Creates a new domain class.
+.TP
+.B create-filters
+.IP
+Creates a new filters class.
+.TP
+.B create-hibernate-cfg-xml
+.IP
+Creates a hibernate.cfg.xml file.
+.TP
+.B create-integration-test
+.IP
+Creates a new Grails integration test which loads the whole Grails environment when run.
+.TP
+.B create-plugin
+.IP
+Creates a Grails plugin for the given name.
+.TP
+.B create-script
+.IP
+Creates a Grails Gant Script.
+.TP
+.B create-service
+.IP
+Creates a new service class.
+.TP
+.B create-tag-lib
+.IP
+Creates a new tag library.
+.TP
+.B create-unit-test
+.IP
+Creates a new Grails unit test. A unit test requires that you mock out access to dynamic methods, but executes a lot quicker.
+.TP
+.B dependency-report
+.IP
+Produces a dependency report for the current Grails application.
+.TP
+.B doc
+.IP
+Produces documentation for a Grails project.
+.TP
+.B generate-all
+.IP
+Generates a CRUD interface (controller + views) for a domain class.
+.TP
+.B generate-controller
+.IP
+Generates the CRUD controller for a specified domain class.
+.TP
+.B generate-views
+.IP
+Generates the CRUD views for a specified domain class.
+.TP
+.B help
+.IP
+Prints out the help for each script.
+.TP
+.B install-dependency
+.IP
+Install a JAR dependency into a project.
+.TP
+.B install-plugin
+.IP
+Installs a plug-in for the given URL or name and version.
+.TP
+.B install-templates
+.IP
+Installs the artifact and scaffolding templates.
+.TP
+.B integrate-with [--intellij | --eclipse | -- textmate ]
+.IP
+Generates configuration files for your preferred IDE or editor.
+.TP
+.B interactive
+.IP
+Starts Grails CLI (script runner) in interactive mode. Keeps the JVM running between grails commands for faster script execution.
+.TP
+.B list-plugin-updates
+.IP
+Checks installed plugin versions against latest releases on repositories.
+.TP
+.B list-plugins
+.IP
+Provides a list of all available plugins.
+.TP
+.B package
+.IP
+Packages a Grails application. Note: To create WAR use
+.B grails war
+.TP
+.B package-plugin
+.IP
+Packages a Grails plugin as a zip file.
+.TP
+.B plugin-info <plugin-name> [version]
+.IP
+Provides the info for a given plugin.
+.TP
+.B release-plugin
+.IP
+A target for plug-in developers that uploads and commits the current plug-in as the latest revision. The command will prompt for your SVN login details.
+.TP
+.B remove-proxy
+.IP
+Removes a proxy configuration.
+.TP
+.B run-app
+.IP
+Runs a Grails application.
+.TP
+.B run-script
+.IP
+Execute the specified script(s) after starting up the application environment.
+.TP
+.B run-war
+.IP
+Runs a Grails application's WAR in an embedded web server.
+.TP
+.B set-proxy
+.IP
+Sets HTTP proxy configuration for Grails.
+.TP
+.B set-version
+.IP
+Sets the current application version.
+.TP
+.B shell
+.IP
+Load the Grails interactive shell.
+.TP
+.B stats
+.IP
+Generates basic stats for a Grails project.
+.TP
+.B test-app [unit|integration:type]
+.IP
+Run a Grails application\'s integration and/or unit tests by type.
+.TP
+.B uninstall-plugin
+.IP
+Uninstalls a plugin for a given name.
+.TP
+.B upgrade
+.IP
+Upgrades a Grails application from a previous version of Grails.
+.TP
+.B war
+.IP
+Creates a WAR archive for deployment onto a Java EE application server.
+.SH ENVIRONMENT
+May be one of
+.B development, test
+or
+.BR "production" ","
+although further environemts may be specified in
+.I Config.groovy
+.SH AUTHOR
+This man page is adapted from documentation provided by the
+.BR "grails help" " shell script."
