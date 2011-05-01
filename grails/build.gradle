@@ -1,5 +1,12 @@
 /*
-
+	//setup the source Package
+	//copy the skeleton debian folder into the build/packaging directory.
+	//Generate the important files
+		//changelog using debchange (include updating vs new?
+			//debchange --create
+		//control - Generated from a template.
+		//copyright ??  Does this need to be updated?
+		
 */
 task hello << {
     println "hello"
