@@ -1,16 +1,91 @@
 /*
-	//setup the source Package
-	//copy the skeleton debian folder into the build/packaging directory.
-	//Generate the important files
-		//changelog using debchange (include updating vs new?
-			//debchange --create
-		//control - Generated from a template.
-		//copyright ??  Does this need to be updated?
-		
+* setup the source Package (First time or second time.) downloading, apt-getting, etc.
+	* Download the distribution (or find it locally..)
+	* expand it and create a tar-gz tar czf hello-2.4.tar.gz hello-2.4
+	* copy that as the orig -- cp hello-2.4.tar.gz hello_2.4.orig.tar.gz
+	* expand the source into tar -xzvf hello_2.4.orig.tar.gz
+* copy the skeleton debian folder into the build/packaging directory.
+* Generate the important files
+	* changelog using debchange (include updating vs new?
+		* debchange --create vs debchange --increment ?
+	* control - Generated from a template.
+	* copyright ??  Does this need to be updated?
+	* generate the manpage for grails-1.3.7  Or is this just for grails? and it gets switched out based on the version of Grails that is active.  Is this a slave of the alternative of Grails?  Yes, that is how Java does it.
+	* <package>.install
+	* <package>.postinst
+	* <package>.prerm
+	* <package>.manpages
+	* What about grails-doc-$version ?? Do we generate that, that sounds like just more work.
+	* Other files?
+	
+	* Another target to build and Test this whole thing with debuild/lintian/pbuilder
+		* debuild clean
+		* debuild -S  (generates the source package)  (also have or direct user input for gpg agent.
+9. Step back into the parent folder and run lintian on the .dsc file.
+10. Run pbuilder-lucid on the .dsc file (lucid, because it is the official LTS version)
+11. Finally run dput to push it up to the PPA.
+12. Copy your lucid build over to maverick and natty.
+
+Maybe another Build and debian skeleton directory for a meta-package
 */
-task hello << {
-    println "hello"
+defaultTasks 'tasks'
+
+task clean << {
+	delete(buildDir)
 }
+task downloadGrails << {
+	String grailsDownloadableFileName = grailsDownloadUrl.tokenize("/")[-1]
+	logger.info("Grails Downloadable File Name = $grailsDownloadableFileName")
+	File grailsFile = new File("resources/download/", grailsDownloadableFileName)
+	if (grailsFile.exists() && grailsFile.size() > 100) {
+		logger.lifecycle('Grails is already downloaded :: skipping download')
+		
+	} else {
+		logger.lifecycle("Downloading $grailsDownloadableFileName")
+		FileOutputStream fos = new FileOutputStream(grailsFile)
+		def bos = new BufferedOutputStream(fos)
+		bos << new URL(grailsDownloadUrl).openStream()
+		bos.close()
+	}
+	logger.info("${grailsFile.name} is ${grailsFile.size()} bytes")
+	logger.info("sha1sum :: " + "sha1sum resources/download/${grailsFile.name}".execute().text?.trim())
+	logger.info("md5sum  :: " + "md5sum resources/download/${grailsFile.name}".execute().text?.trim())
+}
+task expandGrailsDownloadedFile(type: Copy) {
+	from zipTree("resources/download/${grailsDownloadUrl.tokenize('/')[-1]}")
+	into("$buildDir")
+}
+task copyGrailsToSourcePackage(dependsOn: expandGrailsDownloadedFile) << {
+	println "./resources/buildSourcePackage.sh ${packageName} ${packageVersion} build/grails-${grailsVersion}".execute().text //TODO make the grails-version 
+}
+debianDirectory = dir("build/staging/${packageName}-${packageVersion}") 
+task setupSourcePackage(dependsOn: [copyGrailsToSourcePackage, debianDirectory]) << {
+	println "OK"
+	copy {
+		from "resources/debian"
+		into "build/staging/${packageName}-${packageVersion}/debian"
+	}
+	def engine = new groovy.text.GStringTemplateEngine()
+	Map props = [
+		grailsVersion: grailsVersion,
+		packageName: packageName,
+		packageVersion: packageVersion,
+		alternativesPriority: grailsVersion.replace(".","")
+	]
+	
+	//generate Files
+	def installFileTemplate = new File('resources/templates/grails.install')
+	def template = engine.createTemplate(installFileTemplate).make(props)
+	File installFile = new File("build/staging/${packageName}-${packageVersion}/debian/${packageName}.install")
+	installFile.text = template.toString()
+	
+	def postinstFileTemplate = new File('resources/templates/grails.postinst')
+	template = engine.createTemplate(postinstFileTemplate).make(props)
+	File postinstFile = new File("build/staging/${packageName}-${packageVersion}/debian/${packageName}.postinst")
+	postinstFile.text = template.toString()
+}
+
+
 task wrapper(type: Wrapper) {
     gradleVersion = '1.0-milestone-3'
 }

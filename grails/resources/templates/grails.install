@@ -1,0 +1,9 @@
+bin/grails /usr/share/grails-${grailsVersion}/bin/
+bin/grails-debug /usr/share/grails-${grailsVersion}/bin/
+bin/startGrails /usr/share/grails-${grailsVersion}/bin/
+conf/ /usr/share/grails-${grailsVersion}/
+dist/ /usr/share/grails-${grailsVersion}/
+lib/ /usr/share/grails-${grailsVersion}/
+media/ /usr/share/grails-${grailsVersion}/
+plugins/ /usr/share/grails-${grailsVersion}/
+scripts/ /usr/share/grails-${grailsVersion}/
