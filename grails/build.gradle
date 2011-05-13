@@ -53,10 +53,10 @@ task downloadGrails << {
 }
 task expandGrailsDownloadedFile(type: Copy) {
 	from zipTree("resources/download/${grailsDownloadUrl.tokenize('/')[-1]}")
-	into("$buildDir")
+	into("$buildDir/originalPackage")
 }
 task copyGrailsToSourcePackage(dependsOn: expandGrailsDownloadedFile) << {
-	println "./resources/buildSourcePackage.sh ${packageName} ${packageVersion} build/grails-${grailsVersion}".execute().text //TODO make the grails-version 
+	println "./resources/buildSourcePackage.sh ${packageName} ${packageVersion} build/originalPackage".execute().text //TODO make the grails-version 
 }
 debianDirectory = dir("build/staging/${packageName}-${packageVersion}") 
 task setupSourcePackage(dependsOn: [copyGrailsToSourcePackage, debianDirectory]) << {
@@ -73,6 +73,7 @@ task setupSourcePackage(dependsOn: [copyGrailsToSourcePackage, debianDirectory])
 		alternativesPriority: grailsVersion.replace(".","")
 	]
 	
+	//TODO remove redundancy that is repeated several times again
 	//generate Files
 	def installFileTemplate = new File('resources/templates/grails.install')
 	def template = engine.createTemplate(installFileTemplate).make(props)
@@ -83,6 +84,16 @@ task setupSourcePackage(dependsOn: [copyGrailsToSourcePackage, debianDirectory])
 	template = engine.createTemplate(postinstFileTemplate).make(props)
 	File postinstFile = new File("build/staging/${packageName}-${packageVersion}/debian/${packageName}.postinst")
 	postinstFile.text = template.toString()
+	
+	def prermFileTemplate = new File('resources/templates/grails.prerm')
+	template = engine.createTemplate(prermFileTemplate).make(props)
+	File prermFile = new File("build/staging/${packageName}-${packageVersion}/debian/${packageName}.prerm")
+	prermFile.text = template.toString()
+	
+	def controlFileTemplate = new File('resources/templates/control')
+	template = engine.createTemplate(controlFileTemplate).make(props)
+	File controlFile = new File("build/staging/${packageName}-${packageVersion}/debian/control")
+	controlFile.text = template.toString()
 }
 
 

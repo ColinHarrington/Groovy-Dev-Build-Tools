@@ -1,4 +1,4 @@
-Source: grails
+Source: ${packageName}
 Section: java
 Priority: optional
 Maintainer: Colin Harrington <colin@colinharrington.net>
@@ -6,10 +6,10 @@ Build-Depends: debhelper (>= 7.0.50~)
 Standards-Version: 3.9.1
 Homepage: http://www.grails.org
 
-Package: grails
+Package: ${packageName}
 Section: java
 Architecture: all
-Depends: sun-java6-jdk | openjdk-6-jdk, ${misc:Depends}
+Depends: sun-java6-jdk | openjdk-6-jdk, \${misc:Depends}
 Description: A rapid web development platform built on Groovy
  Grails is a full stack framework and attempts to solve as many pieces of the web development puzzle through the core technology and its associated plug-ins. Included out the box are things like:
  . 
